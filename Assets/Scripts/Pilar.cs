@@ -15,13 +15,14 @@ public class Pilar : MonoBehaviour
     private float contadorReparacion = 0f; // Contador de tiempo para la reparación
 
     private bool enemigosGenerados = false; // Controla si ya se han generado enemigos al reparar
-
+    public MouseDrag mouse;
     // Sonido que se reproduce cuando un enemigo colisiona con el pilar
     public AudioClip sonidoRoboCristal;
     private AudioSource audioSource;
     // Sonnido que suena cuando estas en el pilar
     public AudioClip sonidoMusicaAmbiente;
     private AudioSource audioSource2;
+    public Vector3 posiciónDeLaMusicaAmbiente;
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -36,13 +37,13 @@ public class Pilar : MonoBehaviour
         }
 
         ultimaPosicionMouse = Input.mousePosition;
-
+        posiciónDeLaMusicaAmbiente = new Vector3(490, 330, 0);
         // Configura el audio
         audioSource  = gameObject.AddComponent<AudioSource>();
         audioSource.clip = sonidoRoboCristal;
         audioSource.playOnAwake = false; // Para que el sonido solo se reproduzca en la colisión
         audioSource2 = gameObject.AddComponent<AudioSource>();
-        audioSource.clip = sonidoMusicaAmbiente;
+        audioSource2.clip = sonidoMusicaAmbiente;
         audioSource2.playOnAwake = false; // Para que el sonido solo se reproduzca cuando se esta en el pilar
     }
 
@@ -67,6 +68,7 @@ public class Pilar : MonoBehaviour
         }
 
         ultimaPosicionMouse = posicionActualMouse;
+        //Debug.Log(Input.mousePosition);
     }
 
     private void OnMouseEnter()
@@ -112,7 +114,7 @@ public class Pilar : MonoBehaviour
             }
 
             pilarDestruido = true;
-
+            //AudioListener.pause = true;
             SceneManager.LoadScene("FinDelJuego");
         }
     }
@@ -127,11 +129,18 @@ public class Pilar : MonoBehaviour
             if (audioSource != null && sonidoRoboCristal != null)
             {
                 audioSource.Play();
+               
             }
+         /*  if ((mouse.currentPosition - mouse.startPosition).magnitude <= posiciónDeLaMusicaAmbiente.magnitude)
+            {
+                if (!audioSource2.isPlaying)
+                    {
+                        audioSource2.Play();
+                    }
+            }*/
+            
         }
-        If(new Vector3(-2.452202,0.13,-10))
-        {
-       AudioSource.PlayClipAtPoint(sonidoMusicaAmbiente,new Vector3(-2.452202,0.13,-10), 1);
-        }
+
+       
     }
 }
