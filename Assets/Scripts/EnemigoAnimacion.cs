@@ -11,6 +11,8 @@ public class EnemigoAnimacion : MonoBehaviour
     private SpriteRenderer spriteRenderer; // Referencia al SpriteRenderer
     private float tiempoTranscurrido = 0f; // Control del tiempo entre cambios
     private bool enRegreso = false; // Estado que indica si está regresando
+    public AudioClip sonidoCristalRobado;
+    private AudioSource audioSource;
 
     void Start()
     {
@@ -25,6 +27,9 @@ public class EnemigoAnimacion : MonoBehaviour
         {
             Debug.LogError("No se han asignado sprites en el inspector.");
         }
+        audioSource  = gameObject.AddComponent<AudioSource>();
+        audioSource.clip = sonidoCristalRobado;
+        audioSource.playOnAwake = false;
     }
 
     void Update()
@@ -54,6 +59,11 @@ public class EnemigoAnimacion : MonoBehaviour
     {
         enRegreso = true;
         indiceActual = 0; // Reiniciar el índice de animación al cambiar de modo
+        if (audioSource != null && sonidoCristalRobado != null)
+            {
+                audioSource.Play();
+               
+            }
     }
 
     // Método para activar el estado normal
